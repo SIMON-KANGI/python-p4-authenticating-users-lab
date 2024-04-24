@@ -63,14 +63,13 @@ class Logout(Resource):
         session['user_id'] = None
         return {'message': '204: No Content'}, 204
 class CheckSession(Resource):
-
     def get(self):
         user = User.query.filter(User.id == session.get('user_id')).first()
         if user:
-            
-            return jsonify(user.to_dict()), 200
+            return user.to_dict()
         else:
-            return {'message': '401: Not Authorized'}, 401
+            return {}, 401 
+
 
 api.add_resource(CheckSession, '/check_session')
 
